@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -23,6 +24,7 @@ import com.example.sefer.data.DiaryEntry
 fun DiaryItem(
     entry: DiaryEntry,
     onDelete: () -> Unit,
+    onShare: () -> Unit,
     onClick: () -> Unit
 ) {
     Card(
@@ -38,13 +40,19 @@ fun DiaryItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(modifier = Modifier.weight(1f)) {
-                Text(text = entry.title, style = MaterialTheme.typography.titleMedium)
+                if (entry.title.isNotEmpty()) {
+                    Text(text = entry.title, style = MaterialTheme.typography.titleMedium)
+                }
                 Text(text = entry.content, style = MaterialTheme.typography.bodyMedium)
             }
-            IconButton(onClick = onDelete) {
-                Icon(Icons.Default.Delete, contentDescription = "Delete")
+            Row {
+                IconButton(onClick = onShare) {
+                    Icon(Icons.Default.Share, contentDescription = "Share")
+                }
+                IconButton(onClick = onDelete) {
+                    Icon(Icons.Default.Delete, contentDescription = "Delete")
+                }
             }
         }
     }
 }
-
