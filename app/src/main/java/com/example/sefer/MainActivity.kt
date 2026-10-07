@@ -7,9 +7,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.example.sefer.ui.DiaryScreen
+import com.example.sefer.ui.LoadingScreen
 import com.example.sefer.ui.theme.SeferTheme
+import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +24,18 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    DiaryScreen()
+                    var showLoading by remember { mutableStateOf(true) }
+
+                    LaunchedEffect(Unit) {
+                        delay(2000)
+                        showLoading = false
+                    }
+
+                    if (showLoading) {
+                        LoadingScreen()
+                    } else {
+                        DiaryScreen()
+                    }
                 }
             }
         }
